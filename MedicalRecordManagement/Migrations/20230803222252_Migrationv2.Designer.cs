@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalRecordManagement.Migrations
 {
     [DbContext(typeof(MedicalRecordMabagementDbContext))]
-    [Migration("20230803152703_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20230803222252_Migrationv2")]
+    partial class Migrationv2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace MedicalRecordManagement.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("TaxNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

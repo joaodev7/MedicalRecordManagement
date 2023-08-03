@@ -1,13 +1,11 @@
 ﻿using static MedicalRecordManagement.Models.Enums.Enums;
 
-namespace MedicalRecordManagement.Models.Domain
+namespace MedicalRecordManagement.Models.Views
 {
-    public class User
+    public class CreateUserViewModel
     {
-        public Guid Id { get; set; }
         public string? TaxNumber { get; set; }
         public string? Password { get; set; }
         public UserRole Role { get; set; }
-        public MedicalRecord? MedicalRecord { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using MedicalRecordManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalRecordManagement.Migrations
 {
     [DbContext(typeof(MedicalRecordMabagementDbContext))]
-    partial class MedicalRecordMabagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230803212328_initial migration")]
+    partial class initialmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,32 +58,18 @@ namespace MedicalRecordManagement.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("MedicalRecordId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<string>("TaxNumber")
+                    b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MedicalRecordId");
-
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("MedicalRecordManagement.Models.Domain.User", b =>
-                {
-                    b.HasOne("MedicalRecordManagement.Models.Domain.MedicalRecord", "MedicalRecord")
-                        .WithMany()
-                        .HasForeignKey("MedicalRecordId");
-
-                    b.Navigation("MedicalRecord");
                 });
 #pragma warning restore 612, 618
         }
