@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model MedicalRecordManagement.Models.Views.LoginUserViewModel
+<style>
     .login-section {
         max-width: 400px;
         margin: 0 auto;
@@ -32,19 +33,20 @@
         cursor: pointer;
     }
 </style>
-@model MedicalRecordManagement.Models.Views.LoginUserViewModel
 <div class="login-section">
     <h1>Login</h1>
     <form class="login-form" method="post" action="Login">
         <div>
-            <label for="cpf">CPF:</label>
-            <input type="text" class="form-control" asp-for="TaxNumber">
+            <label for="">CPF:</label>
+            <input type="number" class="form-control" asp-for="TaxNumber" maxlength="11" required>
+            <span asp-validation-for="TaxNumber" class="text-danger"></span>
         </div>
         <div>
-            <label for="password">Senha:</label>
-            <input type="password" class="form-control" asp-for="Password">
+            <label for="">Senha:</label>
+            <input type="password" class="form-control" asp-for="Password" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <button type="submit">Login</button>
-        <a asp-controller="User" asp-action="CreateUser" class="btn btn-primary">Cadastre-se</a>
+        <button type="submit" asp-controller="Login" asp-action="Login">Login</button>
+        <button class="btn btn-primary" asp-controller="User" asp-action="Index" formnovalidate>Cadastre-se</button>
     </form>
 </div>

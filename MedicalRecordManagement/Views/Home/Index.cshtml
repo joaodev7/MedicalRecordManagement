@@ -1,0 +1,64 @@
+﻿@model List<MedicalRecordManagement.Models.Domain.User>
+@{
+}
+<head>
+    <title>Lista de Usuários</title>
+    <style>
+        /* Estilização da seção */
+        .rounded-section {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        /* Estilização da tabela */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="rounded-section">
+        <h1>Lista de Usuários</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>TaxNumber</th>
+                    <th>Role</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.TaxNumber</td>
+                        <td>@user.Role</td>
+                        <td>
+                            <a href="User/View/@user.Id">View</a>
+                            <button class="btn btn-edit" onclick="location.href='@Url.Action("Edit", "User", new { User = user })'">Editar</button>
+                            <button class="btn btn-view" onclick="location.href='@Url.Action("View", "User", new { User = user })'">Visualizar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>

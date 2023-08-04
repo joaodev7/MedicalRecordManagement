@@ -15,21 +15,16 @@ namespace MedicalRecordManagement.Controllers
             this.dbContext = dbContext;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUser()
-        {
-            var users = await dbContext.Users.ToListAsync();
-
-            return Ok(users);
-        }
-
-        [HttpGet]
-        public IActionResult CreateUser()
+        [HttpPost]
+        public IActionResult Index()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateUserViewModel createUserRequest) {
+        public async Task<IActionResult> CreateUser(CreateUserViewModel createUserRequest) 
+        {
+            if(!ModelState.IsValid)
+                return View(createUserRequest);
 
             var user = new User()
             {
@@ -42,8 +37,14 @@ namespace MedicalRecordManagement.Controllers
             await dbContext.Users.AddAsync(user);
             await dbContext.SaveChangesAsync();
 
-            return RedirectToAction("CreateUser");
-        
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        public async Task<IActionResult> View (Guid id)
+        {
+            await dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return View();
         }
     }
 }

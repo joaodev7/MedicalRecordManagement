@@ -12,23 +12,26 @@
 
 <div class="register-section">
     <h2>Cadastre-se</h2>
-    <form method="post" action="CreateUser">
+    <form  asp-action="CreateUser">
         <div class="mb-3">
             <label for="" class="form-label">CPF</label>
-            <input type="text" class="form-control" asp-for="TaxNumber">
+            <input type="number" class="form-control" asp-for="TaxNumber" maxlength="11" required>
+            <span asp-validation-for="TaxNumber" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Password</label>
-            <input type="password" class="form-control" asp-for="Password">
+            <input type="password" class="form-control" asp-for="Password" required>
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label for="userType">Tipo de usuário:</label>
-            <select id="userType" name="UserType" class="form-control">
+            <label for="">Tipo de usuário:</label>
+            <select id="Role" name="Role" class="form-control" asp-for="Role">
                 <option value="Paciente">Paciente</option>
                 <option value="Médico">Médico</option>
             </select>
+            <span asp-validation-for="Role" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" asp-controller="User" asp-action="CreateUser">Submit</button>
     </form>
 </div>
 
