@@ -33,6 +33,10 @@
     </style>
 </head>
 <body>
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
     <div class="rounded-section">
         <h1>Lista de Usuários</h1>
         <table>

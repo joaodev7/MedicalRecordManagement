@@ -1,4 +1,5 @@
-﻿using MedicalRecordManagement.Data;
+﻿using MedicalRecordManagement.Auth;
+using MedicalRecordManagement.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -39,6 +40,7 @@ namespace MedicalRecordManagement
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetConnectionString("JwtSecretKey")))
                 };
             });
+            services.AddScoped<IJwtService, JwtService>();
         }
 
         // Este método é usado para configurar o pipeline de requisições HTTP.
@@ -56,9 +58,10 @@ namespace MedicalRecordManagement
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles();           
+            app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

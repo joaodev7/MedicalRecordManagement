@@ -2,7 +2,6 @@
 using MedicalRecordManagement.Models;
 using MedicalRecordManagement.Models.Views;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace MedicalRecordManagement.Controllers
 {
@@ -19,7 +18,7 @@ namespace MedicalRecordManagement.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost]       
         public IActionResult Login(LoginUserViewModel loginUserViewModel)
         {
             if(!ModelState.IsValid)

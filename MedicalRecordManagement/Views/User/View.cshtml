@@ -1,4 +1,4 @@
-﻿
+﻿@model MedicalRecordManagement.Models.Views.UserViewModel
 @{
 }
 <head>
@@ -11,11 +11,24 @@
         <span>@Model.TaxNumber</span>
     </div>
     <div>
+        <label>Fullname:</label>
+        <span>@Model.FullName</span>
+    </div>
+    <div>
+        <label>PhoneNumber:</label>
+        <span>@Model.PhoneNumber</span>
+    </div>
+    <div>
         <label>Role:</label>
         <span>@Model.Role</span>
     </div>
     <div>
-        <label>MedicalRecord:</label>
-        <span>@Model.MedicalRecord</span>
+        <label>Address:</label>
+        <span>@Model.Address</span>
     </div>
+    <div>
+        <label>Photo:</label>
+        <span>@Model.Photo</span>
+    </div> 
+
 </body>
