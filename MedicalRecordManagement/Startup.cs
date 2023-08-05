@@ -66,8 +66,12 @@ namespace MedicalRecordManagement
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                     name: "default",
-                     pattern: "{controller=Login}/{action=Index}/{id?}");
+                    name: "default",
+                    pattern: "{controller=Login}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "medicalrecord",
+                    pattern: "MedicalRecord/{action}/{id?}",
+                    defaults: new { controller = "MedicalRecord" });
             });
         }
     }

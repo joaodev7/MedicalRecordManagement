@@ -1,6 +1,4 @@
-﻿using MedicalRecordManagement.Models.Domain;
-using System.ComponentModel.DataAnnotations;
-using static MedicalRecordManagement.Models.Enums.Enums;
+﻿using static MedicalRecordManagement.Models.Enums.Enums;
 
 namespace MedicalRecordManagement.Models.Views
 {

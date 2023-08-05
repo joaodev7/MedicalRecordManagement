@@ -37,6 +37,7 @@ namespace MedicalRecordManagement.Controllers
                     TaxNumber = createUserRequest.TaxNumber,
                     Password = createUserRequest.Password,
                     Role = createUserRequest.Role,
+                    CreationDate = DateTime.Now,
                 };
 
                 await dbContext.Users.AddAsync(user);
@@ -104,7 +105,7 @@ namespace MedicalRecordManagement.Controllers
 
                     return View(userViewModel);
                 }
-                throw new Exception("Fudeu");
+                throw new Exception("Dados Inválidos");
             }
             catch (Exception ex)
             {

@@ -2,6 +2,7 @@
 using MedicalRecordManagement.Models.Domain;
 using MedicalRecordManagement.Models.Views;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedicalRecordManagement.Controllers
 {
@@ -17,7 +18,7 @@ namespace MedicalRecordManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(UserViewModel userViewModel, IFormFile photo)
+        public async Task<IActionResult> Create(UserViewModel userViewModel)
         {
             try
             {
@@ -28,40 +29,33 @@ namespace MedicalRecordManagement.Controllers
                     {
                         Id = Guid.NewGuid(),
                         Address = userViewModel.Address,
+                        FullName = userViewModel.FullName,
                         CPF = userViewModel.TaxNumber,
                         PhoneNumber = userViewModel.PhoneNumber,
                         CreationDate = DateTime.Now,
+                        Photo = userViewModel.Photo,
                     };
-
-                    if (photo != null && photo.Length > 0)
-                    {
-                        try
-                        {
-                            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
-
-                            string filePath = Path.Combine(webHostEnvironment.WebRootPath, "Uploads", fileName);
-
-                            using (var fileStream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await photo.CopyToAsync(fileStream);
-                            }
-
-                            medicalRecord.Photo = "/Uploads/" + fileName;
-                        }
-                        catch (Exception ex)
-                        {
-                            TempData["ErrorMessage"] = "Error while uploading photo: " + ex.Message;
-                            return View(medicalRecord);
-                        }
-                    }
 
                     dbContext.MedicalRecords.Add(medicalRecord);
                     await dbContext.SaveChangesAsync();
 
+                    var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userViewModel.Id && u.DeletionDate == null);
+
+                    if (user == null)
+                        throw new Exception("usuário não foi criado");
+
+                    user.MedicalRecord = medicalRecord;
+                    user.UpdateDate = DateTime.Now;
+
+                    dbContext.Users.Update(user);
+                    await dbContext.SaveChangesAsync();
+
+                    var userVal = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == userViewModel.Id && u.DeletionDate == null);
+
                     return RedirectToAction("Index", "Home");
                 }
 
-                return View();
+                return RedirectToAction("Index","User",userViewModel);
 
             }
             catch (Exception ex)

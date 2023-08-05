@@ -25,20 +25,23 @@
 
 <form asp-controller="MedicalRecord" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="fullName">Full Name:</label>
-        <input type="text" class="form-control" id="fullName" name="FullName" required>
+        <label for="">Full Name:</label>
+        <input type="text" class="form-control" id="fullName" name="FullName" asp-for="FullName" required>
     </div>
     <div class="form-group">
         <label for="address">Address:</label>
-        <input type="text" class="form-control" id="address" name="Address" required>
+        <input type="text" class="form-control" id="address" name="Address" asp-for="Address" required>
     </div>
     <div class="form-group">
         <label for="phoneNumber">Phone Number:</label>
-        <input type="text" class="form-control" id="phoneNumber" name="PhoneNumber" required>
+        <input type="text" class="form-control" id="phoneNumber" name="PhoneNumber" asp-for="PhoneNumber" required>
     </div>
     <div class="form-group">
         <label for="photo">Photo:</label>
-        <input type="file" class="form-control-file" id="photo" name="Photo" accept=".jpg,.png" required>
+        <input type="file" class="form-control-file" id="photo" name="Photo" accept=".jpg,.png" value="caminho/do/arquivo/default.jpg" asp-for="Photo">
     </div>
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Role) 
+    @Html.HiddenFor(m => m.TaxNumber) 
     <button type="submit" class="btn btn-primary">Create</button>
 </form>
