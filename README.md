@@ -5,7 +5,7 @@ Medical Record Management é um projeto de gerenciamento de registros médicos, 
 # Tecnologias Utilizadas
 ### O projeto foi desenvolvido utilizando as seguintes tecnologias e ferramentas:
 
-- ASP.NET Core 5.0: É um framework de desenvolvimento web de código aberto, cross-platform e altamente modular para construir aplicativos modernos.
+- ASP.NET Core 6.0: É um framework de desenvolvimento web de código aberto, cross-platform e altamente modular para construir aplicativos modernos.
 - Entity Framework Core: É um ORM (Object-Relational Mapping) que permite interagir com bancos de dados relacionais usando objetos.
 - SQL Server: É o sistema de gerenciamento de banco de dados relacional da Microsoft.
 - Bootstrap: É um framework de código aberto para desenvolvimento front-end que facilita a criação de páginas web responsivas e estilizadas.
