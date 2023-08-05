@@ -4,6 +4,7 @@ using MedicalRecordManagement.Models.Views;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace MedicalRecordManagement.Controllers
@@ -25,21 +26,31 @@ namespace MedicalRecordManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(CreateUserViewModel createUserRequest)
         {
-            if (!ModelState.IsValid)
-                return View(createUserRequest);
-
-            var user = new User()
+            try
             {
-                Id = Guid.NewGuid(),
-                TaxNumber = createUserRequest.TaxNumber,
-                Password = createUserRequest.Password,
-                Role = createUserRequest.Role,
-            };
+                if (!ModelState.IsValid)
+                    return View(createUserRequest);
 
-            await dbContext.Users.AddAsync(user);
-            await dbContext.SaveChangesAsync();
+                var user = new User()
+                {
+                    Id = Guid.NewGuid(),
+                    TaxNumber = createUserRequest.TaxNumber,
+                    Password = createUserRequest.Password,
+                    Role = createUserRequest.Role,
+                };
 
-            return RedirectToAction("Index", "Home");
+                await dbContext.Users.AddAsync(user);
+                await dbContext.SaveChangesAsync();
+
+                TempData["CreatedUser"] = JsonConvert.SerializeObject(user);
+                return RedirectToAction("CreateMedicalRecord", "User");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", "User");
+            }
+
         }
 
         public async Task<IActionResult> View(Guid id)
@@ -49,7 +60,7 @@ namespace MedicalRecordManagement.Controllers
                 if (id == Guid.Empty)
                     throw new Exception("Valor invalido");
 
-                var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+                var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == id && u.DeletionDate == null);
                 var medicalRecord = await dbContext.MedicalRecords.FirstOrDefaultAsync(u => u.Id == user.MedicalRecord.Id);
 
                 var userViewModel = new UserViewModel
@@ -69,6 +80,35 @@ namespace MedicalRecordManagement.Controllers
             {
                 TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult CreateMedicalRecord()
+        {
+            try
+            {
+                if (TempData.ContainsKey("CreatedUser") && TempData["CreatedUser"] is string userJson)
+                {
+                    var createdUser = JsonConvert.DeserializeObject<User>(userJson);
+
+                    var userViewModel = new UserViewModel
+                    {
+                        Id = createdUser.Id,
+                        TaxNumber= createdUser.TaxNumber,
+                        Role = createdUser.Role,
+                        Address = null,
+                        FullName = null,
+                        PhoneNumber = null,
+                        Photo = null,
+                    };
+
+                    return View(userViewModel);
+                }
+                throw new Exception("Fudeu");
+            }
+            catch (Exception ex)
+            {
+                return View(ex);
             }
         }
     }

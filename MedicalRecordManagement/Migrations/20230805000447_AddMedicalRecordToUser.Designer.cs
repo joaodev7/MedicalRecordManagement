@@ -4,6 +4,7 @@ using MedicalRecordManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedicalRecordManagement.Migrations
 {
     [DbContext(typeof(MedicalRecordMabagementDbContext))]
-    partial class MedicalRecordMabagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230805000447_AddMedicalRecordToUser")]
+    partial class AddMedicalRecordToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +41,7 @@ namespace MedicalRecordManagement.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletionDate")
+                    b.Property<DateTime>("DeletionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FullName")
@@ -50,7 +53,7 @@ namespace MedicalRecordManagement.Migrations
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -67,7 +70,7 @@ namespace MedicalRecordManagement.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DeletionDate")
+                    b.Property<DateTime>("DeletionDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid?>("MedicalRecordId")
@@ -82,7 +85,7 @@ namespace MedicalRecordManagement.Migrations
                     b.Property<string>("TaxNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdateDate")
+                    b.Property<DateTime>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

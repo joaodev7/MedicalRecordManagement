@@ -33,6 +33,12 @@
         cursor: pointer;
     }
 </style>
+<head>
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+</head>
 <div class="login-section">
     <h1>Login</h1>
     <form class="login-form" method="post" action="Login">

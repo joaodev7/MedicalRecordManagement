@@ -2,7 +2,7 @@
 
 namespace MedicalRecordManagement.Models.Domain
 {
-    public class User
+    public class User : BaseModel
     {
         public Guid Id { get; set; }
         public string? TaxNumber { get; set; }

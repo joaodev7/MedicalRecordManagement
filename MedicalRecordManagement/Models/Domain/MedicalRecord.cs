@@ -2,7 +2,7 @@
 
 namespace MedicalRecordManagement.Models.Domain
 {
-    public class MedicalRecord
+    public class MedicalRecord : BaseModel
     {
         public Guid Id { get; set; }
         public string? FullName { get; set; }

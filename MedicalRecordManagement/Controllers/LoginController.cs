@@ -2,6 +2,7 @@
 using MedicalRecordManagement.Models;
 using MedicalRecordManagement.Models.Views;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedicalRecordManagement.Controllers
 {
@@ -16,15 +17,37 @@ namespace MedicalRecordManagement.Controllers
  
         public IActionResult Index()
         {
+            if (TempData.ContainsKey("ErrorMessage"))
+            {
+                var errorMessage = TempData["ErrorMessage"] as string;
+                ViewBag.ErrorMessage = errorMessage;
+            }
             return View();
         }
         [HttpPost]       
         public IActionResult Login(LoginUserViewModel loginUserViewModel)
         {
-            if(!ModelState.IsValid)
-                return RedirectToAction("Index",loginUserViewModel);
+            try
+            {
+                if (!ModelState.IsValid)
+                    return RedirectToAction("Index", loginUserViewModel);
 
-            return RedirectToAction("Index", "Home");
+                var user = dbContext.Users.FirstOrDefault(u => u.TaxNumber == loginUserViewModel.TaxNumber && u.DeletionDate == null);
+
+                if (user == null)
+                    throw new Exception("Usuário não cadastrado");
+
+                if (user.Password == loginUserViewModel.Password)
+                    return RedirectToAction("Index", "Home");
+                else
+                    throw new Exception("Senha inválida");
+
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", "Login");
+            }
         }
     }
 }

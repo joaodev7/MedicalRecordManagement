@@ -15,13 +15,11 @@ namespace MedicalRecordManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var users = await dbContext.Users.ToListAsync();
+            var users = await dbContext.Users.Where(u => u.DeletionDate == null).ToListAsync();
 
             if (TempData.ContainsKey("ErrorMessage"))
             {
                 var errorMessage = TempData["ErrorMessage"] as string;
-                // Você pode usar a mensagem de erro para notificações, logs ou para exibição na View.
-                // Por exemplo, usando ViewData ou ViewBag para exibir na View:
                 ViewBag.ErrorMessage = errorMessage;
             }
 
